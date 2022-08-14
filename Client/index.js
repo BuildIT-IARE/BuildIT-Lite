@@ -2072,10 +2072,12 @@ app.get(
       json: true,
     };
     request(options, function (err, response, body) {
+      imageUrl = imageRetrive(req, res);
       body.url = clientRoute;
       res.render("questiondesc", {
         imgUsername: req.cookies.username,
         data: body,
+        imgUrl: imageUrl,
       });
     });
   }

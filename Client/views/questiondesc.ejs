@@ -110,7 +110,7 @@
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      padding: 22px 0;
+      padding: 5px 0;
       border-bottom: 0.6mm solid rgb(7, 48, 66);
       margin-bottom: 25px;
     }
@@ -208,6 +208,13 @@
       width: 100%;
       text-align: center;
     }
+    .photo-name img {
+      width: 80px;
+      height: 80px;
+      border-radius: 1mm;
+      border: 0.5mm solid rgb(7, 48, 66);
+      margin-right: 5px;
+    }
   </style>
   <body>
     <script>
@@ -237,6 +244,10 @@
           target="_blank"
           >Existing Complaints</a
         >
+      </div>
+      <div class="photo-name">
+        <span><%=imgUsername%></span>
+        <span><img src="<%=imgUrl%>" alt="user" /></span>
       </div>
     </section>
     <section class="section pt-8" style="padding-top: 0; padding-bottom: 20px">
