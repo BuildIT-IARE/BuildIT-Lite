@@ -32,39 +32,6 @@
       href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
       rel="stylesheet">
   <link rel="stylesheet" href="../css/style2.css">
-  <style>
-    .counters{
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-evenly;
-      flex-wrap: wrap;
-      margin: 10px 0px;
-    }
-    .counter{
-      font-family: poppins;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: x-large;
-      background: rgb(243, 243, 243);
-      color: rgb(0, 110, 219);
-      padding: 25px;
-      border-radius: 2mm;
-      box-shadow: 15px 15px 0px rgba(33, 33, 33, 0.2);
-      font-weight: bold;
-      transition: 0.25s;
-    }
-    .counter:hover{
-      box-shadow: 2px 2px 0px rgba(33, 33, 33, 0.2);
-    }
-    .counter span{
-      font-size: medium;
-      font-weight: 400;
-      text-shadow:inset 1px 1px rgba(0, 18, 76, 0.2);
-    }
-  </style>
 </head>
 
 <body>
@@ -80,7 +47,7 @@
     <div class="row">
 
       <div class="col-lg-11 mx-auto"><br><br><br><br><br>
-        <h1 class="text-white font-tertiary">Welcome to<br>BuildIT<br>By Go-Labs</h1>
+        <h1 class="text-white font-tertiary">Welcome to<br>BuildIT Lite<br>By Go-Labs</h1>
       </div>
     </div>
   </div>
@@ -106,7 +73,6 @@
       <div class="col-lg-10 mx-auto text-center">
         <p class="font-secondary paragraph-lg text-dark">At IARE we believe education is an ocean and one should sink in to find  <br><b>Success</b>. <br><br>Institute of Aeronautical Engineering (IARE), Hyderabad was established in the year 2000 and is run by Maruthi Educational Society founded by a devoted group of eminent professional and industrialists having a long and outstanding experience in educational system with a mission ‘Education for Liberation’. It is the first institute to start B.Tech program in Aeronautical Engineering in the state of Telangana and has gradually transformed itself into an integrated multi-disciplinary technological institute.
           IARE is a prestigious Autonomous engineering college offering seven B.Tech programs (CSE, IT, ECE, EEE, Aeronautical, Mechanical and Civil Engineering) and six M.Tech programs in engineering and MBA with 18 years of rich standing in the educational sphere. </b></p>
-        <a href="about" class="btn btn-transparent">know more</a>
         <p class="font-secondary paragraph-lg text-dark"><b>
             
       </div>
@@ -132,11 +98,6 @@
   </div>
 </footer> -->
 <!-- /footer -->
-<div class="counters">
-  <p class="counter" id="total"><span>Total Views</span> <%=totalCount%></p>
-  <p class="counter" id="weekly"><span>Daily Views</span><%= dayCount%></p>
-  <p class="counter" id="counter"><span>Weekly Views</span><%= weeklyCount%></p>
-</div>
 <% include ../views/partials/footer %>
 
 <!-- jQuery -->
@@ -149,42 +110,6 @@
 <script src="plugins/shuffle/shuffle.min.js"></script>
 
 <!-- Main Script -->
-<form method="POST" autocomplete="off" name="google-sheet" style="display: none;">
-  <input type="text" name="date" id="date">
-  <input type="text" name="month" id="month">
-  <input type="text" name="time" id="time">
-  <input type="text" name="username" id="username">
-  <input type="text" id="ip" name="ip" style="display: none" />
-</form>
-<script>
-  const googleSheetsApi = "<%= googleSheetsApi %>"
-  var formdate=document.getElementById("date")
-  var formmonth=document.getElementById("month")
-  var formtime=document.getElementById("time")
-  var formuser=document.getElementById("username")
-  var dateObj = new Date();
-  var month = dateObj.getMonth() + 1; //months from 1-12
-  var day = dateObj.getDate();
-  var year = dateObj.getFullYear();
-  var time=dateObj.getHours()+":"+dateObj.getMinutes()+":"+dateObj.getSeconds()
-  newdate = year + "/" + month + "/" + day;
-  formdate.value=newdate
-  formmonth.value=month+"/"+dateObj.getFullYear()
-  formtime.value=time
-  formuser.value="<%=imgUsername%>"
-  const countEl = document.getElementById("counter");
-  fetch("https://api.ipify.org/?format=json")
-.then(results=>results.json())
-.then(data=>{
-  document.getElementById("ip").value=data.ip
-  const scriptURL ="https://script.google.com/macros/s/"+googleSheetsApi;
-  const form = document.forms["google-sheet"];
-  fetch(scriptURL, { method: "POST", body: new FormData(form) })
-    .then()
-    .catch((error) => console.error("Error!", error.message));
-})
-
-</script>
 
 <script src="js/script.js"></script>
 

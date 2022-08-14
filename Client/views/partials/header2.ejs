@@ -7,54 +7,12 @@
       </div>
       <div class="chapter-nav-btn">
         <button class="nav-btn"><a href="/">Home</a></button>
-        <button class="nav-btn"><a href="/about">About</a></button>
-        <% if(!imgUsername){ %>
-        <button class="nav-btn"><a href="/codechef-iare-chapter">CodeChef Chapter</a></button>
-        <%}%>
-        <button class="nav-btn"><form action="/skill" method="POST">
-            <a class="nav-link" onclick="this.parentNode.submit();" style="color: white;">SkillUP365</a>
-          </form></button>
         <% if(imgUsername){ %>
           <button class="nav-btn"><a href="/contest">BuildIT Lab</a></button>
-          <button class="nav-btn"><a href="/ResumeBuilder">Resume Builder</a></button>
-          <% } %>
-          <% if (imgUsername){ %>
-        <div class="nav-dots">
-          <button type="button" class="threedots"><span class="material-icons">more_vert</span></button>
-          <div class="dots-nav">
-            <a href="/tutorials" class="nav-btn4">Tutorials</a>
-            <a href="/qualifier_tests" class="nav-btn4">Qualifier Test</a>
-            <a href="/resume/<%= imgUsername%>" class="nav-btn4">My Resume</a>
-            <a href="/potdReport" class="nav-btn4">POTD Report</a>
-            <a href="/codechef-iare-chapter" class="nav-btn4">CodeChef Chapter</a>
-            <a href="/profile" class="nav-btn4">Profile</a>
-            <a href="/logout" class="nav-btn4">Logout</a>
-          </div>
-        </div>
-        <script>
-           var dotsmenu = document.querySelector(".dots-nav");
-      var dots = document.querySelector(".threedots");
-      var toggle = 0;
-      var press = 0;
-      dots.onclick = function () {
-        if (toggle == 0) {
-          dotsmenu.style.display = "flex";
-          toggle = 1;
-        } else {
-          dotsmenu.style.display = "none";
-          toggle = 0;
-        }
-        press = 1;
-      };
-      window.onclick = function () {
-        if (toggle == 1 && press == 0) {
-          dotsmenu.style.display = "none";
-          toggle = 0;
-        } else {
-          press = 0;
-        }
-      };
-        </script>
+          <button class="nav-btn"><a href="/profile">Profile</a></button>
+          <button class="nav-btn"><a href="/logout">Logout</a></button>
+          <button class="nav-btn" style="color: white; font-weight: bold; font-family: poppins;"><%= imgUsername %></button>
+          <span style="margin-right: 20px;"><img src="<%=imgUrl%>" alt="img" style="width: 80px; height: 80px; border-radius: 1mm;"></span>         
         <% } else { %>
           <button class="nav-btn"><a href="/login">Login</a></button>
         <% } %>
@@ -70,18 +28,8 @@
       </div>
       <div class="chapter-nav-btn2">
         <button class="nav-btn2" onclick="navslide()"><a href="#">Home <span class="material-icons">arrow_forward<span></a></button>
-        <button class="nav-btn2" onclick="navslide()"><a href="#">About <span class="material-icons">arrow_forward<span></span></a></button>
-        <button class="nav-btn2" onclick="navslide()"><a href="#">CodeChef Chapter <span class="material-icons">arrow_forward<span></span></a></button>
-        <button class="nav-btn2" onclick="navslide()"><form action="/skill" method="POST">
-            <a class="nav-link" onclick="this.parentNode.submit();" style="padding: 0;">SkillUP365 <span class="material-icons">arrow_forward<span></span></a>
-          </form></button>
           <% if (imgUsername){ %>
         <button class="nav-btn2" onclick="navslide()"><a href="/contest">BuildIT Lab <span class="material-icons">arrow_forward<span></span></a></button>
-        <button class="nav-btn2" onclick="navslide()"><a href="/tutorials">Tutorials <span class="material-icons">arrow_forward<span></span></a></button>
-        <button class="nav-btn2" onclick="navslide()"><a href="/qualifier_tests">Qualifier Test <span class="material-icons">arrow_forward<span></span></a></button>
-        <button class="nav-btn2" onclick="navslide()"><a href="/ResumeBuilder">Resume Builder <span class="material-icons">arrow_forward<span></span></a></button>
-        <button class="nav-btn2" onclick="navslide()"><a href="/resume/<%= imgUsername%>">My Resume <span class="material-icons">arrow_forward<span></span></a></button>
-        <button class="nav-btn2" onclick="navslide()"><a href="/potdReport">POTD Report <span class="material-icons">arrow_forward<span></span></a></button>
         <button class="nav-btn2" onclick="navslide()"><a href="/profile">Profile <span class="material-icons">arrow_forward<span></span></a></button>
         <button class="nav-btn2" onclick="navslide()"><a href="/logout">Logout <span class="material-icons">arrow_forward<span></span></a></button>
         <% } else { %>
@@ -132,7 +80,7 @@
           navigation.style.boxShadow = "0 0 0px rgba(0,0,0,0)";
         }
         if (p > ij && p > 15) {
-          navigation.style.transform = "translateY(-100px)";
+          navigation.style.transform = "translateY(0px)";
         } else if (p < ij) {
           navigation.style.transform = "translateY(0px)";
         }

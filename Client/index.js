@@ -90,33 +90,20 @@ let checkSignIn = async (req, res, next) => {
   }
 };
 
+var imageUrl = "";
+function imageRetrive(req, res) {
+  let imageUrl = "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/";
+  let rollno = req.cookies.username;
+  let branch = req.cookies.branch;
+  var testUrl = imageUrl + branch + "/" + rollno + ".jpg";
+  return testUrl;
+}
+
 function loginCounts(req, res) {
-  let options = {
-    url: serverRoute + "/counters",
-    method: "get",
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
-  request(options, function (err, response, body) {
-    if (body.success) {
-      res.render("home", {
-        imgUsername: req.cookies.username,
-        dayCount: body.data[0].day,
-        weeklyCount: body.data[0].week,
-        totalCount: body.data[0].total,
-        googleSheetsApi,
-      });
-    } else {
-      res.render("home", {
-        imgUsername: req.cookies.username,
-        dayCount: 0,
-        weeklyCount: 0,
-        totalCount: 0,
-        googleSheetsApi,
-      });
-    }
+  imageUrl = imageRetrive(req, res);
+  res.render("home", {
+    imgUsername: req.cookies.username,
+    imgUrl: imageUrl,
   });
 }
 
@@ -1462,8 +1449,13 @@ app.get("/contest", checkSignIn, async (req, res, next) => {
   };
 
   request(options, function (err, response, body) {
+    imageUrl = imageRetrive(req, res);
     res.clearCookie("courseId");
-    res.render("contest", { imgUsername: req.cookies.username, data: body });
+    res.render("contest", {
+      imgUsername: req.cookies.username,
+      data: body,
+      imgUrl: imageUrl,
+    });
   });
 });
 
@@ -1555,11 +1547,13 @@ app.get("/contests/:contestId", checkSignIn, async (req, res, next) => {
                 body[i].color = "black";
               }
             }
+            imageUrl = imageRetrive(req, res);
             body.contestId = req.params.contestId;
             res.render("questions", {
               imgUsername: req.cookies.username,
               data: body,
               datatimer: bodytimer,
+              imgUrl: imageUrl,
             });
           });
         });

@@ -1,5 +1,4 @@
 const User = require("../models/user.model.js");
-const Count = require("../models/count.model.js");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const handlebars = require("handlebars");
@@ -69,7 +68,7 @@ exports.findOnePublic = (req, res) => {
         email: user.email,
         branch: user.branch,
         phone: user.phone ? user.phone : "",
-        photo: user.photo.contentType ? user.photo.data.toString('base64') : "",
+        photo: user.photo.contentType ? user.photo.data.toString("base64") : "",
       };
       res.send(sendUser);
     })
@@ -354,13 +353,13 @@ exports.updateImage = (req, res) => {
         };
         const result = await uploadImage(img);
         if (result) {
-          res.redirect(clientAddress + '/error' + '?message=' + result);
+          res.redirect(clientAddress + "/error" + "?message=" + result);
         }
         fs.unlinkSync(`../Public/${username}`, console.log(err));
       }
     });
   }
-  
+
   const uploadImage = async (img) => {
     return User.findOneAndUpdate(
       { username: req.params.username },
@@ -380,7 +379,7 @@ exports.updateImage = (req, res) => {
         if (!user) {
           return "User not found with username  " + req.params.username;
         }
-        res.redirect(clientAddress + '/profile');
+        res.redirect(clientAddress + "/profile");
       })
       .catch((err) => {
         if (err.kind === "ObjectId") {
@@ -388,7 +387,7 @@ exports.updateImage = (req, res) => {
         }
         return "Error updating user with id " + req.params.username;
       });
-  }
+  };
 };
 
 exports.updateOne = async (req, res) => {
@@ -499,7 +498,7 @@ exports.updateOne = async (req, res) => {
         }
         return res.status(500).send({
           success: false,
-          message: err.message,//"Error updating user with id " + req.params.username,
+          message: err.message, //"Error updating user with id " + req.params.username,
         });
       });
   };
@@ -613,13 +612,6 @@ exports.checkPass = (req, res) => {
       if (user[0].password === req.body.password) {
         if (user[0].isVerified === true) {
           // Login successful
-          let currDate = user[0].countDate
-          let date = new Date()
-          let tdate = date.getDate()+":"+date.getMonth()
-          if (currDate!=tdate){
-            await Count.updateOne({},{$inc:{day:1, week:1, total:1}})
-            await User.findOneAndUpdate({username:req.body.username},{$set:{countDate:tdate}})
-          }
           let token = jwt.sign(
             {
               username: user[0].username,
@@ -761,11 +753,11 @@ exports.deleteMultiple = (req, res) => {
     hours = Number(req.body.hours);
   }
   User.deleteMany({
-      createdAt: {
-        $lte: new Date(Date.now() - (hours) * 60 * 60 * 1000)
-      },
-      isVerified: false
-    })
+    createdAt: {
+      $lte: new Date(Date.now() - hours * 60 * 60 * 1000),
+    },
+    isVerified: false,
+  })
     .then((deletedUsers) => {
       res.send(deletedUsers);
     })

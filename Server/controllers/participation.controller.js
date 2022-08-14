@@ -2,7 +2,6 @@ const Participate = require("../models/participation.model.js");
 const Participation = Participate.Participation;
 const McqParticipation = Participate.McqParticipation;
 const contests = require("./contest.controller.js");
-const mcqs = require("./mcq.controller.js");
 
 var moment = require("moment");
 // Create and Save a new participation

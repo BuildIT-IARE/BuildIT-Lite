@@ -12,17 +12,12 @@ const fs = require("fs");
 const requestIp = require("request-ip");
 const dotenv = require("dotenv");
 const schedule = require("node-schedule");
-const Count = require("./models/count.model.js");
-const SkillUp = require("./controllers/skillUp.controller.js");
 dotenv.config({ path: "../Server/util/config.env" });
 
 let middleware = require("./util/middleware.js");
 
 const User = require("./models/user.model");
 const Participation = require("./models/participation.model").Participation;
-const McqParticipation =
-  require("./models/participation.model").McqParticipation;
-const ParticipationTut = require("./models/participationTut.model");
 
 // API Address
 const localServer = process.env.localServer;
@@ -89,15 +84,6 @@ const questions = require("./controllers/question.controller.js");
 const participations = require("./controllers/participation.controller.js");
 const contests = require("./controllers/contest.controller.js");
 const complains = require("./controllers/complain.controller.js");
-const participationsTut = require("./controllers/participationTut.controller.js");
-const courses = require("./controllers/course.controller.js");
-const skills = require("./controllers/skill.controller.js");
-const mcqs = require("./controllers/mcq.controller.js");
-const codechefEvents = require("../Server/controllers/codechefEvents.controller.js");
-const counters = require("../Server/controllers/counters.controller.js");
-const resume = require("../Server/controllers/resume.controller.js");
-const facultyResume = require("../Server/controllers/facultyResume.controller.js");
-const skillUp = require("../Server/controllers/skillUp.controller.js");
 
 // Require contest routes
 require("./routes/contest.route.js")(app);
@@ -109,27 +95,8 @@ require("./routes/question.route.js")(app);
 require("./routes/submission.route.js")(app);
 // Require participation routes
 require("./routes/participation.route.js")(app);
-
-// Require participation routes
-require("./routes/participationTut.route.js")(app);
-// Require course routes
-require("./routes/course.route.js")(app);
 // Require complain routes
 require("./routes/complain.route.js")(app);
-// Require skill routes
-require("./routes/skill.route.js")(app);
-// Require mcq routes
-require("./routes/mcq.route.js")(app);
-// Require events routes
-require("./routes/codechefEvents.route.js")(app);
-// Require counters routes
-require("./routes/counters.route.js")(app);
-// Require resume routes
-require("./routes/resume.route.js")(app);
-// Require facultyResume routes
-require("./routes/facultyResume.route.js")(app);
-// Require skillUp routes
-require("./routes/skillUp.route.js")(app);
 
 // Examples
 app.get("/testGet", async (req, res) => {
@@ -1130,36 +1097,4 @@ app.get("/plagreport/:languageId/:questionId", async (req, res) => {
     .catch(res.send("Failed"));
 });
 
-schedule.scheduleJob("59 23 * * *", async function () {
-  await Count.findOneAndUpdate(
-    {},
-    {
-      $set: {
-        day: 0,
-      },
-    }
-  );
-});
-
-schedule.scheduleJob("59 23 * * 0", async function () {
-  await Count.findOneAndUpdate(
-    {},
-    {
-      $set: {
-        week: 0,
-      },
-    }
-  );
-});
-
-schedule.scheduleJob("59 23 * * 0", async function () {
-  await SkillUp.findAll(async (err, skillUps) => {
-    skillUps.forEach(async (skillUp) => {
-      await SkillUp.update(skillUp, (err, res) => {
-        console.log("Updated!");
-      });
-    });
-    // await SkillUp.update(skil)
-  });
-});
 app.listen(port, () => console.log("Server @ port", port));
