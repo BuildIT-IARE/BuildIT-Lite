@@ -1,117 +1,330 @@
 <!DOCTYPE html>
 <html lang="zxx">
+  <head>
+    <meta charset="utf-8" />
+    <title>BuildIT</title>
 
-<head>
-  <meta charset="utf-8">
-  <title>BuildIT</title>
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
 
-  <!-- mobile responsive meta -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  
-  <!-- ** Plugins Needed for the Project ** -->
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
-  <!-- slick slider -->
-  <link rel="stylesheet" href="plugins/slick/slick.css">
-  <!-- themefy-icon -->
-  <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css">
-
-  <!-- Main Stylesheet -->
-  <link href="css/style.css" rel="stylesheet">
-  <!--Favicon-->
-  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-  <link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
-    rel="stylesheet"
-  />
-  <link
+    <!--Favicon-->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
       href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
-      rel="stylesheet">
-  <link rel="stylesheet" href="../css/style2.css">
-</head>
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style2.css" />
 
-<body>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow-x: hidden;
+        font-family: poppins;
+        position: relative;
+      }
+      .header {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: white;
+      }
+      .logo img {
+        height: 60px;
+        padding: 0 15px;
+        width: 60px;
+      }
+      .nav-buttons {
+        width: fit-content;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .nav-button {
+        text-decoration: none;
+        color: black;
+        padding: 15px;
+        font-weight: 500;
+        border-radius: 1mm;
+      }
+      .nav-buttons img {
+        width: 65px;
+        height: 65px;
+        border: 0.5mm solid black;
+        border-radius: 1mm;
+        margin-right: 30px;
+        margin-left: 15px;
+      }
+      .username {
+        padding: 15px;
+      }
+      .nav-button:hover {
+        background: rgba(109, 109, 109, 0.142);
+      }
+      .active {
+        padding: 15px 2px;
+        border-radius: 0;
+        margin: 0 15px;
+        border-bottom: 0.8mm solid rgb(25, 123, 221);
+      }
+      .active:hover {
+        background: white;
+      }
+      .home {
+        width: 100%;
+        height: 97vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Plus Jakarta Sans";
+        margin-top: 40px;
+        border-bottom: 0.6mm solid rgba(30, 30, 30, 0.445);
+        margin-bottom: 100px;
+      }
+      .main-title {
+        width: 40vw;
+        text-align: left;
+        font-size: 90px;
+        font-weight: 200;
+        letter-spacing: 2px;
+        color: rgb(32, 33, 36);
+        padding-left: 6vw;
+      }
+      .main-title span {
+        display: block;
+        font-weight: 500;
+      }
+      .main-images {
+        width: 35vw;
+        padding-left: 10vw;
+        padding-right: 5vw;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        justify-content: space-between;
+        font-size: 50px;
+        color: rgb(180, 180, 180);
+        font-weight: 300;
+        font-family: poppins;
+      }
+      .main-images .material-icons {
+        font-size: 50px;
+        line-height: 60px;
+        color: rgb(255, 255, 255);
+        text-align: center;
+      }
+      .top {
+        width: 100%;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        background: rgb(30, 30, 30);
+        color: rgb(130, 186, 108);
+        margin-bottom: 2px;
+        padding-bottom: 5px;
+        border-top-left-radius: 2mm;
+        border-top-right-radius: 2mm;
+        box-shadow: 0 0 5px rgba(12, 12, 12, 0.142);
+      }
+      .middle {
+        width: 100%;
+        text-align: center;
+        color: rgb(212, 181, 101);
+        font-weight: 400;
+        background: rgb(30, 30, 30);
+        color: dodgerblue;
+        margin-bottom: 2px;
+        padding-bottom: 5px;
+        box-shadow: 0 0 5px rgba(12, 12, 12, 0.142);
+      }
+      .bottom {
+        width: 100%;
+        text-align: right;
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        background: rgb(30, 30, 30);
+        color: rgb(130, 186, 108);
+        border-bottom-left-radius: 2mm;
+        border-bottom-right-radius: 2mm;
+        box-shadow: 0 0 5px rgba(12, 12, 12, 0.142);
+      }
+      .bracket {
+        color: white;
+      }
+      .content {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        font-size: 21px;
+        line-height: 35px;
+        word-spacing: 5px;
+        letter-spacing: 1px;
+        margin-bottom: 100px;
+      }
+      .paragraph1 {
+        width: 75vw;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .paragraph {
+        width: 70vw;
+        text-align: justify;
+      }
+      .footer-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .bg-dark2 {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-top: 0.6mm solid rgb(7, 48, 66);
+        background-color: rgb(255, 255, 255);
+      }
+      .footer-section a:hover {
+        color: rgb(34, 34, 34);
+      }
+      .footer-left {
+        width: 30%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 30px;
+      }
+      .footer-right {
+        width: 20%;
+        align-items: center;
+        justify-content: center;
+      }
+      .footer-left-titles a {
+        text-decoration: none;
+        font-family: poppins;
+        font-size: x-large;
+        color: rgb(54, 54, 54);
+        font-weight: 600;
+      }
+      .footer-left-links a {
+        text-decoration: none;
+        font-family: poppins;
+        font-size: 14px;
+        color: rgb(97, 97, 97);
+      }
+      .footer-right p {
+        font-family: poppins;
+        font-size: 14px;
+        color: rgb(97, 97, 97);
+        width: 100%;
+        text-align: center;
+      }
+    </style>
+  </head>
 
-<% include ../views/partials/header2 %>
-
-
-<!-- hero area -->
-
-<section class="hero-area bg-primary" id="parallax">
-  
-  <div class="container">
-    <div class="row">
-
-      <div class="col-lg-11 mx-auto"><br><br><br><br><br>
-        <h1 class="text-white font-tertiary">Welcome to<br>BuildIT Lite<br>By Go-Labs</h1>
+  <body>
+    <section class="header">
+      <div class="logo">
+        <img src="../images/Iare Original logo.jpg" alt="logo" />
       </div>
-    </div>
-  </div>
-  <!-- <div class="layer-bg w-100">
-    <img class="img-fluid w-100" src="images/illustrations/leaf-bg.png" alt="bg-shape">
-  </div> -->
- 
-  <!-- social icon -->
-  <!-- <ul class="list-unstyled ml-5 mt-3 position-relative zindex-1">
-    <li class="mb-3"><a class="text-white" href="#"><i class="ti-facebook"></i></a></li>
-    <li class="mb-3"><a class="text-white" href="#"><i class="ti-instagram"></i></a></li>
-    <li class="mb-3"><a class="text-white" href="#"><i class="ti-dribbble"></i></a></li>
-    <li class="mb-3"><a class="text-white" href="#"><i class="ti-twitter"></i></a></li>
-  </ul> -->
-  <!-- /social icon -->
-</section>
-<!-- /hero area -->
-
-<!-- about -->
-<section class="section">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-10 mx-auto text-center">
-        <p class="font-secondary paragraph-lg text-dark">At IARE we believe education is an ocean and one should sink in to find  <br><b>Success</b>. <br><br>Institute of Aeronautical Engineering (IARE), Hyderabad was established in the year 2000 and is run by Maruthi Educational Society founded by a devoted group of eminent professional and industrialists having a long and outstanding experience in educational system with a mission ‘Education for Liberation’. It is the first institute to start B.Tech program in Aeronautical Engineering in the state of Telangana and has gradually transformed itself into an integrated multi-disciplinary technological institute.
-          IARE is a prestigious Autonomous engineering college offering seven B.Tech programs (CSE, IT, ECE, EEE, Aeronautical, Mechanical and Civil Engineering) and six M.Tech programs in engineering and MBA with 18 years of rich standing in the educational sphere. </b></p>
-        <p class="font-secondary paragraph-lg text-dark"><b>
-            
+      <div class="nav-buttons">
+        <a href="/" class="nav-button active">Home</a>
+        <% if(imgUsername){%>
+        <a href="/contest" class="nav-button">BuildIT Lab</a>
+        <a href="/profile" class="nav-button">Profile</a>
+        <a href="/logout" class="nav-button">Logout</a>
+        <span class="username"><%=imgUsername%></span>
+        <img src="<%=imgUrl%>" alt="" />
+        <%} else{ %>
+        <a href="/login" class="nav-button" style="margin-right: 30px">Login</a>
+        <%}%>
       </div>
-    </div>
-  </div>
-</section>
-<!-- /about -->
-
-
-
-
-<!-- footer -->
-<!-- <footer class="bg-dark footer-section">
-  <div class="section">
-    <div class="container">
-      <div class="row">
-
+    </section>
+    <section class="home">
+      <div class="main-title">
+        <div class="title">Welcome To <span>BuildIT</span> Lite</div>
       </div>
-    </div>
-  </div>
-  <div class="border-top text-center border-dark py-5">
-    <p class="mb-0 text-light"> Institute of Aeronautical Engineering.</p>
-  </div>
-</footer> -->
-<!-- /footer -->
-<% include ../views/partials/footer %>
-
-<!-- jQuery -->
-<script src="plugins/jQuery/jquery.min.js"></script>
-<!-- Bootstrap JS -->
-<script src="plugins/bootstrap/bootstrap.min.js"></script>
-<!-- slick slider -->
-<script src="plugins/slick/slick.min.js"></script>
-<!-- filter -->
-<script src="plugins/shuffle/shuffle.min.js"></script>
-
-<!-- Main Script -->
-
-<script src="js/script.js"></script>
-
-</body>
+      <div class="main-images">
+        <div class="top">
+          &nbsp<span class="material-icons"> arrow_back_ios</span> Start
+        </div>
+        <div class="middle">
+          <span class="bracket">[</span> Code
+          <span class="bracket">]</span>
+        </div>
+        <div class="bottom">
+          <span class="material-icons"> arrow_forward_ios</span> End
+        </div>
+      </div>
+    </section>
+    <section class="content">
+      <div class="paragraph1">
+        At IARE we believe education is an ocean and one should sink in to find
+      </div>
+      <div class="paragraph1" style="font-weight: bold">Success</div>
+      <div class="paragraph">
+        Institute of Aeronautical Engineering (IARE), Hyderabad was established
+        in the year 2000 and is run by Maruthi Educational Society founded by a
+        devoted group of eminent professional and industrialists having a long
+        and outstanding experience in educational system with a mission
+        ‘Education for Liberation’. It is the first institute to start B.Tech
+        program in Aeronautical Engineering in the state of Telangana and has
+        gradually transformed itself into an integrated multi-disciplinary
+        technological institute. IARE is a prestigious Autonomous engineering
+        college offering seven B.Tech programs (CSE, IT, ECE, EEE, Aeronautical,
+        Mechanical and Civil Engineering) and six M.Tech programs in engineering
+        and MBA with 18 years of rich standing in the educational sphere.
+      </div>
+    </section>
+    <footer class="bg-dark2" id="footers">
+      <div class="footer-section">
+        <div class="footer-left">
+          <div class="footer-left-titles">
+            <a href="http://buildit.iare.ac.in/" target="_blank">Build-IT</a>
+          </div>
+          <div class="footer-left-links">
+            <a href="https://www.iare.ac.in" target="_blank">IARE</a>
+          </div>
+          <div class="footer-left-links">
+            <a href="https://forms.gle/J6rtgiSRx4msuuQT6" target="_blank"
+              >Feedback</a
+            >
+          </div>
+        </div>
+        <div class="footer-right">
+          <p>
+            Copyright ©
+            <script>
+              var CurrentYear = new Date().getFullYear();
+              document.write(CurrentYear);
+            </script>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
 </html>
