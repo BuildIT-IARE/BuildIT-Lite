@@ -768,3 +768,32 @@ exports.deleteMultiple = (req, res) => {
       });
     });
 };
+
+//BuildIT Local
+exports.setLocalPassword = (req,res) => {
+  User.updateMany(
+    {
+      username:{
+        $ne:"admin"
+      },
+    },
+    {
+      $set:{
+        password : req.body.pass,
+      }
+    },
+    {new : true}
+  )
+  .then((user) =>{
+    console.log(user);
+    return res.status(200).send({
+      success: true,
+    });
+  })
+  .catch((err) => {
+    return res.status(500).send({
+      success: false,
+      message: "Could not Change Password",
+    });
+  });
+}
