@@ -15,12 +15,12 @@
 	</head>
 	<body>
 		<div class="container">
-			<% include ../views/partials/adminpanel %>
+			<%- include('../views/partials/adminpanel') -%>
 			<header>
 				<h1>Manage Questions<span style="color: white">Update Questions</span></h1>	
 			</header> 
 			<div class="main-block"></div>
-    <form action="http://localhost:5000/questions" method = "POST">
+    <form action="http://172.16.16.226:5000/questions" method = "POST">
       
       <h4>Question ID</h4>
       <input name="questionId" type="text"/>
