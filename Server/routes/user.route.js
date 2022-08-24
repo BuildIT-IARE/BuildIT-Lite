@@ -41,4 +41,7 @@ module.exports = (app) => {
 
   // Forgot Password
   app.post("/forgotPass", users.forgotPass);
+
+  //BuildIT Local set Password
+  app.post("/admin/setLocalPassword",users.setLocalPassword);
 };
