@@ -1016,17 +1016,17 @@ app.get("/admin/deletequestions/multiple", async (req, res) => {
   });
 });
 
-app.get("/admin/localPassword", async(req,res)=>{
+app.get("/admin/localPassword", async (req, res) => {
   let url = {
     url: clientRoute,
     serverurl: serverRoute,
   };
 
-  res.render("setLocalPassword",{
+  res.render("setLocalPassword", {
     data: url,
     token: req.cookies.token,
-  })
-})
+  });
+});
 
 app.post("/admin/deletequestions/multiple", async (req, res) => {
   let url = {
@@ -1429,7 +1429,6 @@ app.get("/admin", checkSignIn, async (req, res, next) => {
   };
 
   request(options, function (err, response, body) {
-    
     let url = {
       url: clientRoute,
       serverurl: serverRoute,
@@ -1574,6 +1573,24 @@ app.get("/contests/:contestId", checkSignIn, async (req, res, next) => {
     } else {
       res.render("error", { data: body, imgUsername: req.cookies.username });
     }
+  });
+});
+
+app.post("/endContest/:contestId", async (req, res) => {
+  let options = {
+    url: serverRoute + "/endContest",
+    method: "post",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      contestId: req.params.contestId,
+      username: req.cookies.username,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    res.redirect("/contest");
   });
 });
 
@@ -1916,7 +1933,7 @@ app.post("/signup_", async (req, res) => {
     json: true,
   };
   request(options, function (err, response, body) {
-    console.log(body)
+    console.log(body);
     if (body.username && body.password) {
       body.message =
         "Sign up successful, Account verification has been sent to your email";
@@ -2773,8 +2790,6 @@ app.get("/ResumeBuilder", checkSignIn, async (req, res) => {
 app.get("/potdReport", checkSignIn, async (req, res) => {
   res.render("potdReport", { imgUsername: req.cookies.username });
 });
-
-
 
 app.get("*", async (req, res) => {
   res.render("404page");

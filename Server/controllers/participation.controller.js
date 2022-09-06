@@ -786,3 +786,28 @@ exports.leaderboard = async (req, res) => {
     });
   }
 };
+
+exports.endContest = async (req, res) => {
+  let findval = req.body.username.toLowerCase() + req.body.contestId;
+  Participation.findOne({ participationId: findval })
+    .then((paricipation) => {
+      let setval = paricipation.participationTime;
+      Participation.findOneAndUpdate(
+        { participationId: findval },
+        {
+          $set: {
+            validTill: setval,
+          },
+        }
+      )
+        .then(() => {
+          res.send("done");
+        })
+        .catch((err) => {
+          res.send("error");
+        });
+    })
+    .catch((err) => {
+      res.send("error");
+    });
+};
