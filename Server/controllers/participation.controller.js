@@ -814,7 +814,10 @@ exports.endContest = async (req, res) => {
 
 
 exports.changeValidTime = (req,res) => {
-  Participation.findOne({participationId : req.body.participationId})
+  const username = req.body.username.toLowerCase();
+  const contestId = req.body.contestId;
+  var participationId = username+contestId;
+  Participation.findOne({participationId : participationId})
   .then((data) => {
     // console.log(data.validTill,new Date());
     const time = Number(req.body.time);
@@ -822,15 +825,18 @@ exports.changeValidTime = (req,res) => {
     data.setTime(data.getTime() + time*60*1000);
     Participation.findOneAndUpdate
     (
-      {participationId : req.body.participationId},
+      {participationId : participationId},
       {
         $set : {
+          participationId : participationId,
           validTill : data,
+          
         }
-      }
+      },
+      {upsert : true}
     )
     .then((data) => {
-      res.status(200).send(data);
+      res.status(200).send("Updated Successfully!");
     })
     .catch((err) => {
       res.status(500).send({
