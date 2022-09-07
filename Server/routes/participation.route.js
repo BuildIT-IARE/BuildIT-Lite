@@ -52,4 +52,6 @@ module.exports = (app) => {
   );
 
   app.post("/endContest", middleware.checkToken, participation.endContest);
+
+  app.post('/changeValidTime',middleware.checkTokenAdmin,participation.changeValidTime);
 };

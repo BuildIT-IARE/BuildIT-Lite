@@ -2791,6 +2791,14 @@ app.get("/potdReport", checkSignIn, async (req, res) => {
   res.render("potdReport", { imgUsername: req.cookies.username });
 });
 
+app.get('/extendUserTime',async (req,res) => {
+  let data = {
+    url : clientRoute,
+    serverurl : serverRoute
+  }
+  res.render("changeValidTill",{data,token : req.cookies.token});
+})
+
 app.get("*", async (req, res) => {
   res.render("404page");
 });

@@ -811,3 +811,44 @@ exports.endContest = async (req, res) => {
       res.send("error");
     });
 };
+
+
+exports.changeValidTime = (req,res) => {
+  const username = req.body.username.toLowerCase();
+  const contestId = req.body.contestId;
+  var participationId = username+contestId;
+  Participation.findOne({participationId : participationId})
+  .then((data) => {
+    // console.log(data.validTill,new Date());
+    const time = Number(req.body.time);
+    var data = new Date(data.validTill);
+    data.setTime(data.getTime() + time*60*1000);
+    Participation.findOneAndUpdate
+    (
+      {participationId : participationId},
+      {
+        $set : {
+          participationId : participationId,
+          validTill : data,
+          
+        }
+      },
+      {upsert : true}
+    )
+    .then((data) => {
+      res.status(200).send("Updated Successfully!");
+    })
+    .catch((err) => {
+      res.status(500).send({
+        success: false,
+        message: "Error occurred!",
+      });
+    })
+  })
+  .catch((err) => {
+    res.status(500).send({
+      success: false,
+      message: err.message || "Error occurred!",
+    });
+  })
+}
