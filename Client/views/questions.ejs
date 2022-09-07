@@ -197,10 +197,12 @@
         background: white;
       }
       #Start {
+        font-family: poppins;
+        margin-top: 100px;
         font-size: x-large;
         background: rgb(246, 189, 65);
         color: rgb(0, 0, 0);
-        padding: 7px 15px;
+        padding: 5px 14px;
         border-radius: 2mm;
         border: 0.5mm solid black;
         margin-bottom: 30px;
@@ -211,6 +213,32 @@
       }
       #username {
         display: block;
+      }
+      .Description {
+        max-width: 600px;
+        padding: 10px;
+        border-radius: 2mm;
+        border: 0.5mm dashed black;
+        background: rgba(150, 150, 150, 0.062);
+      }
+      .Description li{
+        margin: 10px 0;
+
+      }
+      .dtitle{
+        font-size: x-large;
+        text-align: center;
+        width: 100%;
+        font-style:oblique;
+      }
+      .finished{
+        font-family: poppins;
+        font-size: x-large;
+        padding: 10px;
+        border-radius: 2mm;
+        border: 0.5mm dashed black;
+        background: rgba(150, 150, 150, 0.062);
+        display: none;
       }
     </style>
     <link
@@ -227,17 +255,20 @@
     <section class="page">
       <div class="startbutton">
         <button id="Start">Start Exam</button>
-        <div class="Description">
-          <strong>*Note</strong> Once You Start the Exam the page will Enter
-          Full Screen
-          <br />
+        <span class="finished">You have Completed the test (Contact Admin for any Issue)</span>
+        <div class="Description" id="descit">
+          <div class="dtitle">Instructions</div>
+          <ol>
+          <li>Once You Start the Exam the page will Enter
+          Full Screen</li>
           <Strong
-            >Do Not Exit Full Screen, If you exit the full screen the exam will
-            end immediately without any notification</Strong
-          >
-          <br />
-          Click On <strong> Start Exam Button </strong> within 5mins the timer
-          has already started
+            >
+            <li>Do Not Exit Full Screen</Strong
+          >, If you exit the full screen the exam will
+            end immediately <strong> without any notification</strong></li>
+          <li>Click On <strong> Start Exam Button </strong> within 5mins the timer
+          has already started</li>
+          </ol>
         </div>
       </div>
       <section class="main">
@@ -289,6 +320,9 @@
             // If the count down is over, write some text
             if (distance < 0) {
               clearInterval(x);
+              document.getElementById("Start").style.display = "none";
+              document.getElementById("descit").style.display="none"
+              document.querySelector(".finished").style.display="block"
               document.getElementById("demo").innerHTML = "Expired";
             }
           }, 1000);
