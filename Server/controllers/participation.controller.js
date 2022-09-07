@@ -811,3 +811,38 @@ exports.endContest = async (req, res) => {
       res.send("error");
     });
 };
+
+
+exports.changeValidTime = (req,res) => {
+  Participation.findOne({participationId : req.body.participationId})
+  .then((data) => {
+    // console.log(data.validTill,new Date());
+    const time = Number(req.body.time);
+    var data = new Date(data.validTill);
+    data.setTime(data.getTime() + time*60*1000);
+    Participation.findOneAndUpdate
+    (
+      {participationId : req.body.participationId},
+      {
+        $set : {
+          validTill : data,
+        }
+      }
+    )
+    .then((data) => {
+      res.status(200).send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        success: false,
+        message: "Error occurred!",
+      });
+    })
+  })
+  .catch((err) => {
+    res.status(500).send({
+      success: false,
+      message: err.message || "Error occurred!",
+    });
+  })
+}
