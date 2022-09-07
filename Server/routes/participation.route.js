@@ -50,4 +50,6 @@ module.exports = (app) => {
     middleware.checkToken,
     participation.saveResult
   );
+
+  app.post("/endContest", middleware.checkToken, participation.endContest);
 };
