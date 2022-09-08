@@ -30,6 +30,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
       body {
         min-height: 100vh;
@@ -128,12 +129,16 @@
         border-width: 3px;
       }
       .top-section {
-        width: 100%;
+        width: 95%;
         height: fit-content;
         color: black;
         font-family: poppins;
         text-align: center;
-        border-bottom: 0.5mm solid black;
+        border: 0.5mm solid black;
+        border-radius: 2mm;
+        margin: auto;
+        margin-top: 15px;
+        margin-bottom: 15px;
       }
       .page {
         width: 100%;
@@ -148,7 +153,6 @@
         left: 0;
         flex-basis: 25%;
         max-width: 25%;
-        border-right: 0.5mm solid black;
         overflow-y: auto;
       }
       .row {
@@ -240,11 +244,36 @@
         background: rgba(150, 150, 150, 0.062);
         display: none;
       }
+      .tlogo{
+        position: absolute;
+        left: 15px;
+        bottom: 15px;
+        font-size: x-large;
+        font-family: Sacramento;
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.425);
+      }
+      .section{
+        width: 95%;
+        border: 0.5mm solid black;
+        border-radius: 2mm;
+        margin: auto;
+      }
+      .timer{
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+      }
+      .timer span{
+        font-size: medium;
+      }
     </style>
     <link
       href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
       rel="stylesheet"
     />
+    <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style2.css" />
   </head>
 
@@ -270,6 +299,7 @@
           has already started</li>
           </ol>
         </div>
+        <div class="tlogo">BuildIT</div>
       </div>
       <section class="main">
         <section class="top-section">
@@ -278,7 +308,9 @@
               <div>
                 <h2><%= data.contestId.toUpperCase() %></h2>
                 <br />
-                Time Remaining
+                <div class="timer">
+                <span class="material-icons-outlined">timer</span>Time Remaining
+                </div>
                 <h1 id="demo"></h1>
               </div>
             </div>
@@ -437,10 +469,21 @@
         ) {
           console.log(1);
         } else {
-          document.getElementById("myForm").submit();
+          document.getElementById("myForm").submit()
         }
       },
       false
     );
+    function onVisibilityChange() {
+  if (document.visibilityState === 'visible') {
+     console.log("user is focused on the page")
+  } else {
+    if (document.querySelector(".startbutton").style.display == "none"){
+     document.getElementById("myForm").submit()
+  }
+  }
+}
+
+document.addEventListener('visibilitychange', onVisibilityChange);
   </script>
 </html>
