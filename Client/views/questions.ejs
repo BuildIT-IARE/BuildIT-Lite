@@ -268,6 +268,51 @@
       .timer span{
         font-size: medium;
       }
+      .chanceone{
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.167);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        display: none;
+         background: rgba( 255, 255, 255, 0.2 );
+backdrop-filter: blur( 14.5px );
+-webkit-backdrop-filter: blur( 14.5px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+      }
+      .chbox{
+        width: 600px;
+        background: rgb(52, 52, 52);
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+        border-radius: 2mm;
+        font-family: poppins;
+        color: white;
+      }
+      .chalert,.chbutton{
+        width: 100%;
+        font-size: large;
+      }
+      .chbutton button{
+        float: right;
+        width: fit-content;
+        background: rgb(246, 189, 65);
+        font-family: poppins;
+        padding: 10px;
+        border-radius: 2mm;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        font-size: larger;
+        font-weight: 500;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.167);
+        color: black;
+      }
     </style>
     <link
       href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
@@ -282,6 +327,16 @@
 
     <!-- page title -->
     <section class="page">
+      <div class="chanceone" id="firstchance">
+        <div class="chbox">
+          <div class="chalert">
+            Do not <strong>Exit</strong> full Screen or else contest will be ended
+          </div>
+          <div class="chbutton">
+            <button type="button" id="okbut">OK</button>
+          </div>
+        </div>
+      </div>
       <div class="startbutton">
         <button id="Start">Start Exam</button>
         <span class="finished">You have Completed the test (Contact Admin for any Issue)</span>
@@ -320,6 +375,7 @@
         <div id="div1" style="display: none"><%= datatimer.validTill %></div>
         <div id="div2" style="display: none"><%= datatimer.contestId %></div>
         <script>
+          var counter=1
           var countDownDatetemp = document.getElementById("div1").innerHTML;
           countDownDatetemp = countDownDatetemp.slice(
             4,
@@ -356,6 +412,7 @@
               document.getElementById("descit").style.display="none"
               document.querySelector(".finished").style.display="block"
               document.getElementById("demo").innerHTML = "Expired";
+              counter=0
             }
           }, 1000);
         </script>
@@ -449,6 +506,7 @@
     ></form>
   </body>
   <script>
+    
     start = document.getElementById("Start");
     start.addEventListener("click", () => {
       var a = window.innerHeight - 60;
@@ -469,7 +527,12 @@
         ) {
           console.log(1);
         } else {
+          if (counter==0){
           document.getElementById("myForm").submit()
+          }
+          else{
+            document.getElementById("firstchance").style.display="flex"
+          }
         }
       },
       false
@@ -485,5 +548,16 @@
 }
 
 document.addEventListener('visibilitychange', onVisibilityChange);
+var okbut = document.getElementById("okbut")
+okbut.addEventListener("click",()=>{
+  var a = window.innerHeight - 60;
+      document.getElementById("frame").style.height = a + "px";
+      document.querySelector(".main").style.height = a + "px";
+      document.documentElement.requestFullscreen().catch((e) => {
+        console.log(e);
+      });
+      document.getElementById("firstchance").style.display="none"
+      counter=counter-1
+})
   </script>
 </html>
