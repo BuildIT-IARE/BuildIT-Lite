@@ -561,10 +561,9 @@ exports.findUserTime = (result, callback) => {
             null
           );
         }
-        return callback("Error retrieving data part usertime1", null);
+        return callback("Error retrieving data part", null);
       });
   } else {
-    console.log(result)
     Participation.find({ participationId: result.participationId })
       .then((participation) => {
         if (!participation) {
@@ -579,7 +578,7 @@ exports.findUserTime = (result, callback) => {
             null
           );
         }
-        return callback("Error retrieving data part usertime", null);
+        return callback("Error retrieving data part", null);
       });
   }
 };
