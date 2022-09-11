@@ -239,7 +239,6 @@ exports.createSet = (req, res) => {
 
 exports.addSetGivenQIdArray = (req, res) => {
   let questionIdString = req.body.questionIdsString;
-
   let pattern = /[^A-Z&a-z&0-9]/;
   let questionIds = questionIdString
     .split(",")
@@ -254,9 +253,25 @@ exports.addSetGivenQIdArray = (req, res) => {
           message: "Question id does not exists!",
         });
       }
-
-      let set = question.map((e) => e.questionId);
-      updateSet(set);
+      Question.updateMany(
+        { questionId: { $in: questionIds } },
+        {
+          $set:{
+            contestId : req.body.contestId
+          }
+        }
+        )
+      .then((questions) => {
+        let set = question.map((e) => e.questionId);
+        updateSet(set);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          success: false,
+          message:
+            err.message || "Some error occurred while retrieving questions.",
+        });
+      })
     })
     .catch((err) => {
       res.status(500).send({
@@ -269,7 +284,7 @@ exports.addSetGivenQIdArray = (req, res) => {
   const updateSet = (set) => {
     contests.findOneSet(req, (err, contest) => {
       if (err) {
-        res.send({ success: false, message: "Error occured" });
+        res.send({ success: false, message: "Error occurred" });
       }
       let sets = contest.sets || [];
       if (contest.sets) {
@@ -277,7 +292,7 @@ exports.addSetGivenQIdArray = (req, res) => {
       }
       contests.updateOneSet(req, sets, (err, contest1) => {
         if (err) {
-          res.send({ success: false, message: "Error occured" });
+          res.send({ success: false, message: "Error occurred" });
         }
         res.send("Done! Added to Set");
       });
