@@ -280,12 +280,6 @@ exports.acceptSubmission = (sub, callback) => {
                     },
                   },
                   { new: true },
-                  (err, doc) => {
-                    if (err) {
-                      console.log("Something wrong when updating data!");
-                    }
-                    // console.log(doc);
-                  }
                 )
                   .then((participation) => {
                     if (!participation) {
@@ -325,11 +319,6 @@ exports.acceptSubmission = (sub, callback) => {
               },
             },
             { new: true },
-            (err, doc) => {
-              if (err) {
-                console.log("Something wrong when updating data!");
-              }
-            }
           )
             .then((participation) => {
               if (!participation) {
@@ -393,12 +382,6 @@ exports.acceptSubmission = (sub, callback) => {
                       },
                     },
                     { new: true },
-                    (err, doc) => {
-                      if (err) {
-                        console.log("Something wrong when updating data!");
-                      }
-                      // console.log(doc);
-                    }
                   )
                     .then((participation) => {
                       if (!participation) {
@@ -441,11 +424,6 @@ exports.acceptSubmission = (sub, callback) => {
                 },
               },
               { new: true },
-              (err, doc) => {
-                if (err) {
-                  console.log("Something wrong when updating data!");
-                }
-              }
             )
               .then((participation) => {
                 if (!participation) {
@@ -583,9 +561,10 @@ exports.findUserTime = (result, callback) => {
             null
           );
         }
-        return callback("Error retrieving data", null);
+        return callback("Error retrieving data part usertime1", null);
       });
   } else {
+    console.log(result)
     Participation.find({ participationId: result.participationId })
       .then((participation) => {
         if (!participation) {
@@ -600,7 +579,7 @@ exports.findUserTime = (result, callback) => {
             null
           );
         }
-        return callback("Error retrieving data", null);
+        return callback("Error retrieving data part usertime", null);
       });
   }
 };
