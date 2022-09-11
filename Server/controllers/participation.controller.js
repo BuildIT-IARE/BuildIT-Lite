@@ -578,7 +578,7 @@ exports.findUserTime = (result, callback) => {
             null
           );
         }
-        return callback("Error retrieving data part", null);
+        return callback("Error retrieving data", null);
       });
   }
 };
@@ -624,12 +624,12 @@ exports.saveResult = (req, res) => {
       if (participation[0].mcqResults.compute) {
         mcqs.findAllMcqContest(req.params.contestId, (err, mcq) => {
           if (err) {
-            res.send({ success: false, message: "Error occured" });
+            res.send({ success: false, message: "Error occurred" });
           }
           let responses = participation[0].responses.map((e) => e.responses); // array of 4 arrays
           mcq = mcq.map((v) => v.books); // array of 4 arrays each having mcqs array from 1 section
           if (mcq.length !== responses.length) {
-            return res.send({ success: false, message: "Error occured" });
+            return res.send({ success: false, message: "Error occurred" });
           }
 
           let sectionCount = mcq.length;
