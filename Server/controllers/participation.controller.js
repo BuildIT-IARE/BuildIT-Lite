@@ -2,7 +2,7 @@ const Participate = require("../models/participation.model.js");
 const Participation = Participate.Participation;
 const McqParticipation = Participate.McqParticipation;
 const contests = require("./contest.controller.js");
-
+const mcqs = require("./mcq.controller.js");
 var moment = require("moment");
 // Create and Save a new participation
 exports.create = (req, res) => {
@@ -252,7 +252,6 @@ exports.acceptSubmission = (sub, callback) => {
       .then((participation) => {
         // Check prev sub
         participation = participation[0];
-
         found = false;
         updated = false;
         if (participation.submissionResults.length !== 0) {
@@ -279,13 +278,7 @@ exports.acceptSubmission = (sub, callback) => {
                       totalSubmissionResultsScore: sub.score,
                     },
                   },
-                  { new: true },
-                  (err, doc) => {
-                    if (err) {
-                      console.log("Something wrong when updating data!");
-                    }
-                    // console.log(doc);
-                  }
+                  { new: true }
                 )
                   .then((participation) => {
                     if (!participation) {
@@ -324,12 +317,7 @@ exports.acceptSubmission = (sub, callback) => {
                 totalSubmissionResultsScore: sub.score,
               },
             },
-            { new: true },
-            (err, doc) => {
-              if (err) {
-                console.log("Something wrong when updating data!");
-              }
-            }
+            { new: true }
           )
             .then((participation) => {
               if (!participation) {
@@ -392,13 +380,7 @@ exports.acceptSubmission = (sub, callback) => {
                         "submissionResults.$.ipAddress": sub.ipAddress,
                       },
                     },
-                    { new: true },
-                    (err, doc) => {
-                      if (err) {
-                        console.log("Something wrong when updating data!");
-                      }
-                      // console.log(doc);
-                    }
+                    { new: true }
                   )
                     .then((participation) => {
                       if (!participation) {
@@ -440,12 +422,7 @@ exports.acceptSubmission = (sub, callback) => {
                   },
                 },
               },
-              { new: true },
-              (err, doc) => {
-                if (err) {
-                  console.log("Something wrong when updating data!");
-                }
-              }
+              { new: true }
             )
               .then((participation) => {
                 if (!participation) {
@@ -565,6 +542,20 @@ exports.findContestPart = (req, res) => {
       });
     });
 };
+// Retrieve and return all mcqParticipation details.
+exports.findQualContestPart = (req, res) => {
+  McqParticipation.find({ contestId: req.body.contestId })
+    .then((participation) => {
+      res.send(participation);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        success: false,
+        message:
+          err.message || "Some error occurred while retrieving participation.",
+      });
+    });
+};
 
 // Retrieve user participation time.
 exports.findUserTime = (result, callback) => {
@@ -644,6 +635,12 @@ exports.saveResult = (req, res) => {
   })
     .then((participation) => {
       if (participation[0].mcqResults.compute) {
+        let totalCodingScore = 0;
+        for (let i = 0; i < participation[0].submissionResults.length; i++) {
+          totalCodingScore += Number(
+            participation[0].submissionResults[i].score
+          );
+        }
         mcqs.findAllMcqContest(req.params.contestId, (err, mcq) => {
           if (err) {
             res.send({ success: false, message: "Error occured" });
@@ -660,6 +657,14 @@ exports.saveResult = (req, res) => {
           let scoreCnt = Array(sectionCount).fill(0);
           let attemptCnt = Array(sectionCount).fill(0);
           let divisionCnt = Array(sectionCount).fill(0);
+          let totalCodingScore = 0;
+
+          //calc Coding Score
+          for (let i = 0; i < participation[0].submissionResults.length; i++) {
+            totalCodingScore += Number(
+              participation[0].submissionResults[i].score
+            );
+          }
 
           for (let i = 0; i < sectionCount; i++) {
             let sectionLen = mcq[i].length;
@@ -709,6 +714,7 @@ exports.saveResult = (req, res) => {
               $set: {
                 mcqResults: submission,
                 validTill: participation[0].participationTime,
+                totalSubmissionResultsScore: totalCodingScore,
               },
             },
             { new: true }
@@ -754,6 +760,7 @@ exports.saveResult = (req, res) => {
         participations.contestName = participation[0].contestName;
         participations.coding = participation[0].submissionResults;
         // participations.coding = participation[0].submissionResults;
+
         res.send(participations);
       }
     })
@@ -772,7 +779,6 @@ exports.leaderboard = async (req, res) => {
     let participation1 = await McqParticipation.find({
       contestId: req.params.contestId,
     });
-
     let leaderboard = participation1.map((e) => ({
       username: e.username,
       totalScore: e.mcqResults.totalScore + e.totalSubmissionResultsScore,
@@ -812,43 +818,134 @@ exports.endContest = async (req, res) => {
     });
 };
 
-
-exports.changeValidTime = (req,res) => {
+exports.changeValidTime = (req, res) => {
   const username = req.body.username.toLowerCase();
   const contestId = req.body.contestId;
-  var participationId = username+contestId;
-  Participation.findOne({participationId : participationId})
-  .then((data) => {
-    // console.log(data.validTill,new Date());
-    const time = Number(req.body.time);
-    var data = new Date(data.validTill);
-    data.setTime(data.getTime() + time*60*1000);
-    Participation.findOneAndUpdate
-    (
-      {participationId : participationId},
-      {
-        $set : {
-          participationId : participationId,
-          validTill : data,
-          
-        }
-      },
-      {upsert : true}
-    )
+  var participationId = username + contestId;
+  Participation.findOne({ participationId: participationId })
     .then((data) => {
-      res.status(200).send("Updated Successfully!");
+      // console.log(data.validTill,new Date());
+      const time = Number(req.body.time);
+      var data = new Date(data.validTill);
+      data.setTime(data.getTime() + time * 60 * 1000);
+      Participation.findOneAndUpdate(
+        { participationId: participationId },
+        {
+          $set: {
+            participationId: participationId,
+            validTill: data,
+            endContest: 0,
+          },
+        },
+        { upsert: true }
+      )
+        .then((data) => {
+          res.status(200).send("Updated Successfully!");
+        })
+        .catch((err) => {
+          res.status(500).send({
+            success: false,
+            message: "Error occurred!",
+          });
+        });
     })
     .catch((err) => {
       res.status(500).send({
         success: false,
-        message: "Error occurred!",
+        message: err.message || "Error occurred!",
+      });
+    });
+};
+
+exports.checkContest = (req, res) => {
+  let a = req.body.username.toLowerCase() + req.body.testId;
+  Participation.findOne({ participationId: a })
+    .then((participation) => {
+      let setval = participation.participationTime;
+      if (
+        participation["endContest"] != undefined &&
+        participation.endContest == 0
+      ) {
+        Participation.updateOne(
+          { participationId: a },
+          {
+            $set: {
+              endContest: 1,
+            },
+          }
+        )
+          .then(() => {
+            res.send("success");
+          })
+          .catch((err) => {
+            res.send("error");
+          });
+      } else {
+        Participation.updateOne(
+          { participationId: a },
+          {
+            $set: {
+              validTill: setval,
+            },
+          }
+        )
+          .then(() => {
+            res.send("success");
+          })
+          .catch((err) => {
+            res.send("error");
+          });
+      }
+    })
+    .catch((err) => {
+      res.send("error");
+    });
+};
+
+exports.findAllContestsUser = (req, res) => {
+  Participation.find({ username: req.body.username })
+    .then((participation) => {
+      res.send({
+        success: true,
+        count: participation.length,
       });
     })
-  })
-  .catch((err) => {
-    res.status(500).send({
-      success: false,
-      message: err.message || "Error occurred!",
+    .catch((err) => {
+      res.send({
+        success: false,
+        count: 0,
+      });
     });
-  })
-}
+};
+
+exports.findUserPartTime = (req, res) => {
+  if (req.params.mcq === "NO") {
+    Participation.find({ participationId: req.params.participationId })
+      .then((participation) => {
+        res.send({
+          success: true,
+          data: participation,
+        });
+      })
+      .catch((err) => {
+        res.send({
+          success: false,
+        });
+      });
+  } else {
+    McqParticipation.find({
+      participationId: req.body.username + req.body.contestId,
+    })
+      .then((participation) => {
+        res.send({
+          success: true,
+          data: participation,
+        });
+      })
+      .catch((err) => {
+        res.send({
+          success: false,
+        });
+      });
+  }
+};
